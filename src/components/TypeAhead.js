@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { strainType, effectType, flavorType } from '../services/typeservices';
+import '../App.css';
 
 export default class TypeAhead extends Component {
   constructor(props) {
@@ -36,12 +37,12 @@ export default class TypeAhead extends Component {
             <button>+</button>
             {this.strainType()}
           </div>
-          <div>
+          <div className="form-section">
             <input type="text" name="effect" placeholder="effects" value={this.state.effect} onChange={this.handleChange}/>
             <button>+</button>
             {this.effectType()}
           </div>
-          <div>
+          <div className="form-section">
             <input type="text" name="flavor" placeholder="flavors" value={this.state.flavor} onChange={this.handleChange}/>
             <button>+</button>
             {this.flavorType()}

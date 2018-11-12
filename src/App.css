@@ -1,13 +1,13 @@
 .App {
   text-align: center;
 }
-fieldset {
+form {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 75vw;
   margin: 0 auto;
 }
 
-fieldset div {
+form-section {
   flex: 1;
 }
