@@ -11,16 +11,32 @@ class App extends Component {
       strains: '',
       flavors: '',
       effects: '',
-      view: 'search'
+      myStrains: {},
+      species: ['hybrid','indica','sativa'],
+      view: 'search',
     }
     this.getAllStrains = this.getAllStrains.bind(this);
     this.getEffects = this.getEffects.bind(this);
     this.getFlavors = this.getFlavors.bind(this);
     this.setView = this.setView.bind(this);
+    this.addStrain = this.addStrain.bind(this);
   }
   setView(e) {
     const view = e.target.name;
     this.setState({view});
+  }
+  addStrain(strain) {
+    let newStrain = '';
+    let myStrainNames = [];
+    for (let myKey in this.state.myStrains) {
+      myStrainNames.push(myKey);
+    }
+    for (let key in this.state.strains) {
+      if (strain === key && !myStrainNames.includes(key)) {
+        this.setState({ myStrains: { [key] : this.state.strains[key]}});
+        break;
+      }
+    }
   }
   async getAllStrains() {
     const strains = await getAllStrains();
@@ -39,14 +55,24 @@ class App extends Component {
     this.getEffects();
     this.getFlavors();
   }
+  getView() {
+    switch(this.state.view) {
+      case 'strains':
+        return <TypeAhead
+          strains={this.state.strains}
+          addStrain={this.addStrain}/>;
+      case 'search':
+        return <TypeAhead
+          species={this.state.species}
+          effects={this.state.effects}
+          flavors={this.state.flavors}/>;
+    }
+  }
   render() {
     return (
       <div className="App">
         <Nav setView={this.setView}/>
-        <TypeAhead
-          strains={this.state.strains}
-          effects={this.state.effects}
-          flavors={this.state.flavors}/>
+        {this.getView()}
       </div>
     );
   }

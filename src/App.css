@@ -11,3 +11,21 @@ form {
 form-section {
   flex: 1;
 }
+
+.add {
+  display: flex;
+  width: 25vw;
+  margin: 0 auto;
+}
+
+
+.add p {
+  flex: 1;
+}
+
+.add button {
+  width: 3vw;
+  height: 3vw;
+  flex: 0 0 1;
+  margin: auto;
+}

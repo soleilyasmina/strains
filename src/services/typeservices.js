@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 
 function compare(a,b) {
   console.log(a, b);
@@ -11,16 +12,11 @@ function compare(a,b) {
       return 0;
   }
 }
-function strainType(strains, refStrain) {
-  const validStrains = [];
-  if (refStrain) {
-    for (let key in strains) {
-      if (key.toLowerCase().includes(refStrain.toLowerCase())) {
-        validStrains.push(key);
-      }
-    }
-  }
-  return validStrains.map(strain => <p key={strain}>{strain}</p>);
+function addEffect(effect) {
+  return effect;
+}
+function addStrain(strain) {
+  return strain;
 }
 function effectType(effects, refEffect) {
   let validEffects = [];
@@ -33,7 +29,14 @@ function effectType(effects, refEffect) {
     }
   }
   validEffects.sort((a,b) => compare(a.effect,b.effect));
-  return validEffects.map(effect => <p key={effect.effect}>{`${effect.effect}: ${effect.type}`}</p>);
+  return validEffects.map(effect => {
+    return (
+      <div key={`${effect.effect}-div`}className="add">
+        <p key={effect.effect}>{`${effect.effect}: ${effect.type}`}</p>
+        <button type="button" key={`${effect.effect}-button`} onClick={() => addEffect(effect)}>+</button>
+      </div>
+    )
+  });
 }
 function flavorType(flavors, refFlavor) {
   let validFlavors = [];
@@ -45,7 +48,6 @@ function flavorType(flavors, refFlavor) {
 }
 
 export {
-  strainType,
   effectType,
   flavorType
 }

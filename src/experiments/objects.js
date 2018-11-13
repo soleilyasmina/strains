@@ -14,3 +14,9 @@ function objectCheck() {
 }
 
 objectCheck();
+
+function arrayFrom() {
+  return Array.from(objects);
+}
+
+console.log(arrayFrom());
