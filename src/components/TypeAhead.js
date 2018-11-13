@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { effectType, flavorType } from '../services/typeservices';
 import Strains from './Strains';
+import Effects from './Effects';
+import Flavors from './Flavors';
 import '../App.css';
 
 export default class TypeAhead extends Component {
@@ -16,30 +17,22 @@ export default class TypeAhead extends Component {
       medical: [],
       flavors: '',
     }
-    this.effectType = this.effectType.bind(this);
-    this.flavorType = this.flavorType.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addEffect = this.addEffect.bind(this);
     this.addStrain = this.addStrain.bind(this);
+    this.addFlavor = this.addFlavor.bind(this);
   }
   addStrain(strain) {
     this.props.addStrain(strain);
   }
   addEffect(effect) {
-    switch (effect.type) {
-      case 'positive':
-        this.setState({ positive: [...this.state.positive,[effect.effect]]});
-        break;
-    }
+    this.props.addEffect(effect);
+  }
+  addFlavor(flavor) {
+    this.props.addFlavor(flavor);
   }
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
-  }
-  effectType() {
-    return effectType(this.props.effects, this.state.effect);
-  }
-  flavorType() {
-    return flavorType(this.props.flavors, this.state.flavor);
   }
   render() {
     return (
@@ -58,12 +51,18 @@ export default class TypeAhead extends Component {
           {this.props.effects ? <div className="form-section">
             <input type="text" name="effect" placeholder="effects" value={this.state.effect} onChange={this.handleChange}/>
             <button>+</button>
-            {this.effectType()}
+            <Effects
+              effects={this.props.effects}
+              refEffect={this.state.effect}
+              add={this.addEffect}/>
           </div> : null}
           {this.props.flavors ? <div className="form-section">
             <input type="text" name="flavor" placeholder="flavors" value={this.state.flavor} onChange={this.handleChange}/>
             <button>+</button>
-            {this.flavorType()}
+            <Flavors
+              flavors={this.props.flavors}
+              refFlavor={this.state.flavor}
+              add={this.addFlavor}/>
           </div> : null}
         </fieldset>
       </form>

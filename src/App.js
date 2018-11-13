@@ -12,6 +12,12 @@ class App extends Component {
       flavors: '',
       effects: '',
       myStrains: {},
+      myFlavors: [],
+      myEffects: {
+        positive: [],
+        negative: [],
+        medical: []
+      },
       species: ['hybrid','indica','sativa'],
       view: 'search',
     }
@@ -20,6 +26,8 @@ class App extends Component {
     this.getFlavors = this.getFlavors.bind(this);
     this.setView = this.setView.bind(this);
     this.addStrain = this.addStrain.bind(this);
+    this.addEffect = this.addEffect.bind(this);
+    this.addFlavor = this.addFlavor.bind(this);
   }
   setView(e) {
     const view = e.target.name;
@@ -34,6 +42,45 @@ class App extends Component {
     for (let key in this.state.strains) {
       if (strain === key && !myStrainNames.includes(key)) {
         this.setState({ myStrains: { [key] : this.state.strains[key]}});
+        break;
+      }
+    }
+  }
+  addEffect(effect) {
+    switch (effect.type) {
+      case 'positive':
+        this.setState({
+          myEffects: {
+            positive: [...this.state.myEffects.positive, effect.effect],
+            negative: [...this.state.myEffects.negative],
+            medical: [...this.state.myEffects.medical]
+          }
+        });
+        break;
+      case 'negative':
+        this.setState({
+          myEffects: {
+            positive: [...this.state.myEffects.positive],
+            negative: [...this.state.myEffects.negative, effect.effect],
+            medical: [...this.state.myEffects.medical]
+          }
+        });
+        break;
+      case 'medical':
+        this.setState({
+          myEffects: {
+            positive: [...this.state.myEffects.positive],
+            negative: [...this.state.myEffects.negative],
+            medical: [...this.state.myEffects.medical, effect.effect]
+          }
+        });
+        break;
+    }
+  }
+  addFlavor(flavor) {
+    for (let key in this.state.flavors) {
+      if (flavor === this.state.flavors[key] && !this.state.myFlavors.includes(this.state.flavors[key])) {
+        this.setState({ myFlavors: [...this.state.myFlavors, flavor]});
         break;
       }
     }
@@ -64,7 +111,9 @@ class App extends Component {
       case 'search':
         return <TypeAhead
           species={this.state.species}
+          addEffect={this.addEffect}
           effects={this.state.effects}
+          addFlavor={this.addFlavor}
           flavors={this.state.flavors}/>;
     }
   }
