@@ -1,44 +1,67 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Strains
 
-## Available Scripts
+## Abstract
 
-In the project directory, you can run:
+This application is built on [Evan Busse's Strain API](http://strains.evanbusse.com/index.html). The goal is to give medical cannabis consumers helpful information regarding strains, species, flavors, and effects of different strains of cannabis.
 
-### `npm start`
+By selecting a variety of species (sativa, indica, hybrid), effects, and flavors, users can find the most applicable strains for their needs. In addition, users can search over 2,000 strains and find information on each one. Furthermore, users can choose favorites both from the strains menu as well as the search menu.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Components
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+1. ```<Nav />```
+  Enables navigation between different menus.
+2. ```<TypeAhead />```
+  Base component for search functions.
+3. ```<Strains />```
+  Returns list of strains based on ```<TypeAhead />``` input.
+4. ```<Effects />```
+  Returns list of effects based on ```<TypeAhead />``` input.
+5. ```<Species />```
+  Returns list of species based on ```<TypeAhead />``` input.
+6. ```<Flavors />```
+  Returns list of flavors based on ```<TypeAhead />``` input.
+7. ```<StrainInfo />```
+  Returns a infographic with information regarding the chosen strain.
+8. ```<Suggestion />```
+  Returns a suggestion based on the species, effects, and flavors chosen.
 
-### `npm test`
+## Services
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. ```./services/strainservices.js```
+  Performs and returns API calls to the Strain API.
+2. ```./services/searchservices.js```
+  Runs algorithm to return optimal strains to the user.
 
-### `npm run build`
+## Snippets
+The purpose of this snippet is to return strains that contain a substring (i.e. searching 'blue d' and returning all valid strains.)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![_fig. 1: sample call_](./assets/strains.png)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+The props passed for this are:
+1. ```props.strains``` All possible strains stored in state.
+2. ```props.refStrain``` The current string in the input box.
+3. ```props.add``` Function to add the chosen strain to state variable ```myStrains```.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+```javascript
+import React from 'react';
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+export default function Strains(props) {
+  const validStrains = [];
+  if (props.refStrain) {
+    for (let key in props.strains) {
+      if (key.toLowerCase().includes(props.refStrain.toLowerCase())) {
+        validStrains.push(key);
+      }
+    }
+  }
+  return validStrains.map(strain => {
+    return (
+      <div key={`${strain}-div`}className="add">
+        <p key={strain}>{strain}</p>
+        <button type="button" key={`${strain}-button`} onClick={() => props.add(strain)}>+</button>
+      </div>
+    )
+  });
+}
+```

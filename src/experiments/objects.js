@@ -16,7 +16,7 @@ function objectCheck() {
 objectCheck();
 
 function arrayFrom() {
-  return Array.from(objects);
+  for (let key )
 }
 
 console.log(arrayFrom());

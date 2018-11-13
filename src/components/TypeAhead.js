@@ -11,10 +11,6 @@ export default class TypeAhead extends Component {
       strain: '',
       effect: '',
       flavor: '',
-      races: '',
-      positive: [],
-      negative: [],
-      medical: [],
       flavors: '',
     }
     this.handleChange = this.handleChange.bind(this);
@@ -42,15 +38,16 @@ export default class TypeAhead extends Component {
             <legend>Select Species, Effects, and Flavors</legend>}
           {this.props.strains ? <div className="form-section">
             <input type="text" name="strain" placeholder="strains" value={this.state.strain} onChange={this.handleChange}/>
-            <button>+</button>
             <Strains
               strains={this.props.strains}
               refStrain={this.state.strain}
               add={this.addStrain}/>
           </div> : null}
+          {this.props.species ? <div className="form-section">
+            <h4>species</h4>
+          </div> : null}
           {this.props.effects ? <div className="form-section">
             <input type="text" name="effect" placeholder="effects" value={this.state.effect} onChange={this.handleChange}/>
-            <button>+</button>
             <Effects
               effects={this.props.effects}
               refEffect={this.state.effect}
@@ -58,7 +55,6 @@ export default class TypeAhead extends Component {
           </div> : null}
           {this.props.flavors ? <div className="form-section">
             <input type="text" name="flavor" placeholder="flavors" value={this.state.flavor} onChange={this.handleChange}/>
-            <button>+</button>
             <Flavors
               flavors={this.props.flavors}
               refFlavor={this.state.flavor}
