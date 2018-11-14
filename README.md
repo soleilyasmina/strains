@@ -6,6 +6,11 @@ This application is built on [Evan Busse's Strain API](http://strains.evanbusse.
 
 By selecting a variety of species (sativa, indica, hybrid), effects, and flavors, users can find the most applicable strains for their needs. In addition, users can search over 2,000 strains and find information on each one. Furthermore, users can choose favorites both from the strains menu as well as the search menu.
 
+## User Stories
+1. A user can enter a desired strain and see information regarding its species, effects, and flavors.
+2. A user can enter species, effects, and flavors, and receive optimal strains to treat their condition.
+3. A user can enter and return to favorite strains.
+
 ## Components
 
 1. ```<Nav />```

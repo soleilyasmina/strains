@@ -14,9 +14,3 @@ function objectCheck() {
 }
 
 objectCheck();
-
-function arrayFrom() {
-  for (let key )
-}
-
-console.log(arrayFrom());

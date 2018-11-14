@@ -1,23 +1,37 @@
 .App {
   text-align: center;
 }
+.type-container {
+  display: flex;
+}
 form {
   display: flex;
   flex-direction: column;
-  width: 75vw;
+  width: 50vw;
   margin: 0 auto;
+  flex: 1;
 }
-
+.selected {
+  flex: 1;
+}
 form-section {
   flex: 1;
 }
 
+
+.fieldset {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: auto;
+}
+.check-holder {
+  text-align: right;
+}
 .add {
   display: flex;
   width: 25vw;
   margin: 0 auto;
 }
-
 
 .add p {
   flex: 1;

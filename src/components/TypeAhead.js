@@ -10,8 +10,7 @@ export default class TypeAhead extends Component {
     this.state = {
       strain: '',
       effect: '',
-      flavor: '',
-      flavors: '',
+      flavor: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.addEffect = this.addEffect.bind(this);
@@ -32,10 +31,9 @@ export default class TypeAhead extends Component {
   }
   render() {
     return (
-      <form>
-        <fieldset>
-          {this.props.strains ? <legend>Select Strains</legend> :
-            <legend>Select Species, Effects, and Flavors</legend>}
+      <form onSubmit={this.props.onSubmit}>
+          {this.props.strains ? <h2>Select Strains</h2> :
+            <h2>Select Species, Effects, and Flavors</h2>}
           {this.props.strains ? <div className="form-section">
             <input type="text" name="strain" placeholder="strains" value={this.state.strain} onChange={this.handleChange}/>
             <Strains
@@ -44,7 +42,12 @@ export default class TypeAhead extends Component {
               add={this.addStrain}/>
           </div> : null}
           {this.props.species ? <div className="form-section">
-            <h4>species</h4>
+            <label htmlFor="sativa">Sativa</label>
+            <input type="checkbox" name="sativa" value="Sativa" onChange={() => this.props.addSpecies('sativa')}/>
+            <label htmlFor="indica">Indica</label>
+            <input type="checkbox" name="indica" value="Indica" onChange={() => this.props.addSpecies('indica')}/>
+            <label htmlFor="hybrid">Hybrid</label>
+            <input type="checkbox" name="hybrid" value="Hybrid" onChange={() => this.props.addSpecies('hybrid')}/>
           </div> : null}
           {this.props.effects ? <div className="form-section">
             <input type="text" name="effect" placeholder="effects" value={this.state.effect} onChange={this.handleChange}/>
@@ -60,7 +63,7 @@ export default class TypeAhead extends Component {
               refFlavor={this.state.flavor}
               add={this.addFlavor}/>
           </div> : null}
-        </fieldset>
+          {this.state.species ? null : <input type="submit" value="Submit!"/>}
       </form>
     )
   }
