@@ -2,12 +2,24 @@
   text-align: center;
 }
 .type-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(16,1fr);
 }
+.EffectBox {
+  grid-area: 1 / 1 / 12 / 2;
+}
+.FlavorBox {
+  grid-area: 2 / 1 / 17 / 3;
+}
+.SpeciesBox {
+  grid-area: 13 / 1 / 17 / 2;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 90vw;
   margin: 0 auto;
   flex: 1;
 }
@@ -17,7 +29,6 @@ form {
 form-section {
   flex: 1;
 }
-
 
 .fieldset {
   display: grid;
@@ -33,6 +44,9 @@ form-section {
   margin: 0 auto;
 }
 
+label {
+  font-size: 1.5vw;
+}
 .add p {
   flex: 1;
 }

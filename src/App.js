@@ -5,6 +5,7 @@ import Nav from './components/Nav';
 import TypeAhead from './components/TypeAhead';
 import EffectBox from './components/EffectBox';
 import FlavorBox from './components/FlavorBox';
+import SpeciesBox from './components/SpeciesBox';
 import './App.css';
 
 class App extends Component {
@@ -155,23 +156,29 @@ class App extends Component {
           addStrain={this.addStrain}/>;
       case 'search':
         return (
+
+        <form onSubmit={this.handleSubmit}>
+        <h2>Search Strains</h2>
         <div className="type-container">
-          <TypeAhead
-            addSpecies={this.addSpecies}
-            species={this.state.species}
-            addEffect={this.addEffect}
-            effects={this.state.effects}
-            addFlavor={this.addFlavor}
-            flavors={this.state.flavors}
-            onSubmit={this.handleSubmit}/>
-          <EffectBox
-            addEffect={this.addEffect}
-            effects={this.state.effects}/>
+          <div className="flex-boxes">
           <FlavorBox
+            className="FlavorBox"
             addFlavor={this.addFlavor}
             flavors={this.state.flavors}/>
-          {this.getMine()}
-        </div>);
+          </div>
+          <div className="flex-boxes">
+          <EffectBox
+            className="EffectBox"
+            addEffect={this.addEffect}
+            effects={this.state.effects}/>
+          <SpeciesBox
+            className="SpeciesBox"
+            addSpecies={this.addSpecies}/>
+          <input type="submit" value="Submit!"/>
+          </div>
+        </div>
+      </form>
+      );
     }
   }
   render() {

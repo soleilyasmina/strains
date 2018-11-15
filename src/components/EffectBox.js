@@ -3,10 +3,11 @@ import '../App.css';
 
 export default function EffectBox(props) {
   return (
+    <div className="fieldset-container">
     <fieldset>
     <legend>Effects</legend>
     <div className="fieldset">
-    {props.effects.map(effect => {
+    {props.effects ? props.effects.map(effect => {
       return (
         <div key={effect.effect} className="check-holder">
         <label htmlFor={effect.effect}>{effect.effect}</label>
@@ -14,8 +15,9 @@ export default function EffectBox(props) {
         </div>
       )
     }
-    )}
+  ) : <p>Loading...</p>}
     </div>
     </fieldset>
+    </div>
   )
 }
