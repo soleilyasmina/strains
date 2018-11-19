@@ -115,6 +115,7 @@ label {
 
 .faves-container {
   width: 80vmin;
+  min-height: 80vh;
   margin: 0 auto;
   padding: 1vmin;
   display: flex;
