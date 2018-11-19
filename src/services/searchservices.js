@@ -1,5 +1,19 @@
+function sort(a,b) {
+  switch(true) {
+    case a.count < b.count:
+      return 1;
+    case b.count < a.count:
+      return -1;
+    default:
+      return 0;
+  }
+}
+
+function random(limit) {
+  return Math.floor(Math.random() * limit);
+}
+
 function search(strains,species,effects,flavors) {
-  console.log(strains.length);
   let returnStrains = [];
   for (let key in strains) {
     let name = key;
@@ -24,6 +38,8 @@ function search(strains,species,effects,flavors) {
             count += 1;
           }
           break;
+        default:
+          break;
       }
     }
     for (let flavor in flavors) {
@@ -33,22 +49,31 @@ function search(strains,species,effects,flavors) {
     }
   returnStrains.push({name, count, info: strains[key]});
   }
-  returnStrains.sort((a,b) => {
-    switch(true) {
-      case a.count < b.count:
-        return 1;
-      case b.count < a.count:
-        return -1;
-      default:
-        return 0;
-    }
-  });
+  returnStrains.sort((a,b) => sort(a,b));
   let finalStrains = [];
-  for (let i = 0; i < 8; i++) {
-    finalStrains.push(returnStrains[i]);
+  let highScore = returnStrains[0].count;
+  for (let i = 0; i <= highScore + 1; i++) {
+    finalStrains.push([]);
   }
-  return finalStrains;
+  for (let i = 0; i < returnStrains.length; i++) {
+    finalStrains[returnStrains[i].count].push(returnStrains[i]);
+  }
+  let suggestions = [];
+  while (suggestions.length < 8) {
+    switch(true) {
+      case finalStrains[highScore].length > 0:
+        let randIndex = random(finalStrains[highScore].length);
+        let result = finalStrains[highScore].splice([randIndex],1);
+        suggestions.push(result.pop());
+        break;
+      default:
+        highScore -= 1;
+        break;
+    }
+  }
+  return suggestions;
 }
+
 
 export {
   search

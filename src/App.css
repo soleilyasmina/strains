@@ -6,29 +6,29 @@ html, body {
 }
 .App {
   text-align: center;
-  width: 85vw;
+  width: 85vmin;
   min-height: 100vh;
   margin: 0 auto;
   background-color: white;
 }
 nav {
   border-bottom: 2px solid green;
-  width: 85vw;
+  width: 85vmin;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
-  padding: 1vw 0;
-  margin: 0 0 1vw 0;
+  padding: 1vmin 0;
+  margin: 0 0 1vmin 0;
 }
 h1 {
   margin: 0;
-  padding: 1vw 0;
+  padding: 1vmin 0;
   color: white;
   background-color: green;
 }
 h2, h4, h5, h6 {
   margin: 0;
-  padding: 1vw 0;
+  padding: 1vmin 0;
   color: green;
 }
 fieldset {
@@ -37,19 +37,17 @@ fieldset {
 fieldset legend {
   color: green;
 }
-label {
-  color: green;
-}
-input[type=button], input[type=submit], nav button {
+
+input[type=button], input[type=submit], nav button, button[type=button] {
   background-color: green;
-  font-size: 1vw;
+  font-size: 2vmin;
   color: white;
   font-family: 'Montserrat';
-  margin: 1vw .5vw;
+  margin: 1vmin .5vmin;
 }
 input[type=text] {
-  width: 49.75vw;
-  margin: 1vw 0;
+  width: 49.75vmin;
+  margin: 1vmin 0;
   font-family: 'Montserrat';
 }
 .type-container {
@@ -70,7 +68,7 @@ input[type=text] {
 form {
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  width: 80vmin;
   margin: 0 auto;
   flex: 1;
 }
@@ -91,12 +89,13 @@ form-section {
 }
 .add {
   display: flex;
-  width: 20vw;
+  width: 20vmin;
   margin: 0 auto;
 }
 
 label {
-  font-size: 1vw;
+  color: green;
+  font-size: 1.10vmin
 }
 .add p {
   flex: 1;
@@ -104,38 +103,38 @@ label {
 }
 
 .add button {
-  width: 3vw;
-  height: 3vw;
+  width: 3vmin;
+  height: 3vmin;
   flex: 0 0 1;
   margin: auto;
-  font-size: 2vw;
+  font-size: 2vmin;
   color: white;
   background-color: green;
   border: 1px solid white;
 }
 
 .faves-container {
-  width: 80vw;
+  width: 80vmin;
   margin: 0 auto;
-  padding: 1vw;
+  padding: 1vmin;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .suggestion-container {
-  width: 80vw;
-  margin: 1vw auto;
-  padding: 1vw auto;
+  width: 80vmin;
+  overflow-x: auto;
+  margin: 1vmin auto;
+  padding: 1vmin auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: row;
 }
 .indica {
   background-color: purple;
   color: white;
-  width: 20vw;
-  padding: 1vw;
+  width: 20vmin;
+  padding: 1vmin;
   border: 1px solid white;
   box-sizing: border-box;
   flex: 0 0 1;
@@ -144,8 +143,8 @@ label {
 .sativa {
   background-color: green;
   color: white;
-  width: 20vw;
-  padding: 1vw;
+  width: 20vmin;
+  padding: 1vmin;
   border: 1px solid white;
   box-sizing: border-box;
   flex: 0 0 1;
@@ -154,15 +153,15 @@ label {
 .hybrid {
   background-color: #CB5C0D;
   color: white;
-  width: 20vw;
-  padding: 1vw;
+  width: 20vmin;
+  padding: 1vmin;
   border: 1px solid white;
   box-sizing: border-box;
   flex: 0 0 1;
 }
 .Strains {
-  width: 50vw;
-  height: 25vw;
+  width: 50vmin;
+  height: 25vmin;
   overflow: scroll;
   border: 1px solid green;
   margin: 0 auto;
@@ -170,8 +169,10 @@ label {
   grid-template-columns: repeat(2,1fr);
 }
 li {
-  text-align: left;
-  list-style: square;
+  text-align: center;
+  list-style: none;
+  font-size: 2vmin;
+  padding-right: 0vmin;
 }
 
 .search-holder {
@@ -180,4 +181,61 @@ li {
 .strain-holder {
   flex: 0 0 2;
   margin: 0 auto;
+}
+.strain {
+  display: flex;
+  flex-direction: column;
+}
+
+.strain button {
+  margin-top: auto;
+}
+.Permissions {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vmin;
+  height: 100vh;
+}
+
+.Permissions div {
+  position: relative;
+  width: 60vmin;
+  height: 60vh;
+  margin: 20vh auto;
+  background-color: white;
+}
+.Permissions div h1 {
+  margin: 0 auto;
+  background-color: white;
+  color: green;
+  text-align: center;
+}
+.Permissions div p {
+  max-width: 50vmin;
+  margin: 5vh auto;
+}
+.Permissions div form {
+  width: 60vmin;
+  margin: 0 auto;
+}
+.Permissions div form input[type=date] {
+  width: 40vmin;
+  height: 10vh;
+  font-size: 2.5vh;
+  font-family: 'Montserrat';
+  margin: 0 auto;
+}
+.Permissions div form input[type=submit] {
+  margin-top: auto;
+}
+@media (max-width: 700px) {
+  .type-container {
+    grid-template-columns: 1fr;
+  }
+}
+ul {
+  padding: 0;
 }

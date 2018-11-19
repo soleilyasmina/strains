@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { getAllStrains, getEffects, getFlavors } from './services/strainservices';
 import { search } from './services/searchservices';
-import Nav from './components/Nav';
-import TypeAhead from './components/TypeAhead';
-import Search from './components/Search';
-import Strain from './components/Strain';
 import Favorites from './components/Favorites';
+import Nav from './components/Nav';
+import Permissions from './components/Permissions';
+import Search from './components/Search';
+import TypeAhead from './components/TypeAhead';
 import './App.css';
 
 class App extends Component {
@@ -22,7 +22,9 @@ class App extends Component {
       currentStrain: '',
       currentName: '',
       view: 'strains',
-      suggestions: ''
+      suggestions: '',
+      birthday: '',
+      permissions: JSON.parse(localStorage.getItem('permissions'))
     }
     this.getAllStrains = this.getAllStrains.bind(this);
     this.getEffects = this.getEffects.bind(this);
@@ -36,6 +38,21 @@ class App extends Component {
     this.setStrain = this.setStrain.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.isFavorite = this.isFavorite.bind(this);
+    this.setPermissions = this.setPermissions.bind(this);
+    this.setBirthday = this.setBirthday.bind(this);
+  }
+  setBirthday(e) {
+    let birthday = e.target.value;
+    this.setState({ birthday });
+  }
+  setPermissions() {
+    let birthday = this.state.birthday;
+    birthday = Date.parse(birthday);
+    let current = new Date();
+    if (current.getTime() - birthday >= 662709600000) {
+      localStorage.setItem('permissions',true);
+      this.setState({permissions : true});
+    }
   }
   setView(e) {
     const view = e.target.name;
@@ -188,15 +205,24 @@ class App extends Component {
           strains={this.state.myStrains}
           addStrain={this.addStrain}
           isFavorite={this.isFavorite}/>
+      default:
+        return <Permissions />
     }
   }
   render() {
     return (
-      <div className="App">
+      <React.Fragment>
+        {this.state.permissions ?
+        <div className="App">
         <h1>Lexicanna</h1>
         <Nav setView={this.setView}/>
         {this.getView()}
-      </div>
+        </div>
+       : <Permissions
+            setPermissions={this.setPermissions}
+            birthday={this.state.birthday}
+            setBirthday={this.setBirthday}/>}
+    </React.Fragment>
     );
   }
 }
