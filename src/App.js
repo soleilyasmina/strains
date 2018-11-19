@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { getAllStrains, getEffects, getFlavors } from './services/strainservices';
 import { search } from './services/searchservices';
+import Favorites from './components/Favorites';
 import Nav from './components/Nav';
+import Permissions from './components/Permissions';
+import Search from './components/Search';
 import TypeAhead from './components/TypeAhead';
-import EffectBox from './components/EffectBox';
-import FlavorBox from './components/FlavorBox';
 import './App.css';
 
 class App extends Component {
@@ -14,12 +15,16 @@ class App extends Component {
       strains: '',
       flavors: '',
       effects: '',
-      myStrains: {},
+      myStrains: JSON.parse(localStorage.getItem('myStrains')), // add localStorage
       myFlavors: [],
       myEffects: [],
       mySpecies: [],
-      species: ['hybrid','indica','sativa'],
+      currentStrain: '',
+      currentName: '',
       view: 'strains',
+      suggestions: '',
+      birthday: '',
+      permissions: JSON.parse(localStorage.getItem('permissions'))
     }
     this.getAllStrains = this.getAllStrains.bind(this);
     this.getEffects = this.getEffects.bind(this);
@@ -29,22 +34,63 @@ class App extends Component {
     this.addEffect = this.addEffect.bind(this);
     this.addFlavor = this.addFlavor.bind(this);
     this.addSpecies = this.addSpecies.bind(this);
-    this.getMine = this.getMine.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setStrain = this.setStrain.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+    this.isFavorite = this.isFavorite.bind(this);
+    this.setPermissions = this.setPermissions.bind(this);
+    this.setBirthday = this.setBirthday.bind(this);
+  }
+  setBirthday(e) {
+    let birthday = e.target.value;
+    this.setState({ birthday });
+  }
+  setPermissions() {
+    let birthday = this.state.birthday;
+    birthday = Date.parse(birthday);
+    let current = new Date();
+    if (current.getTime() - birthday >= 662709600000) {
+      localStorage.setItem('permissions',true);
+      this.setState({permissions : true});
+    }
   }
   setView(e) {
     const view = e.target.name;
     this.setState({view});
   }
+  clearSearch() {
+    this.setState({
+      myFlavors: [],
+      myEffects: [],
+      mySpecies: []
+    })
+  }
   addStrain(strain) {
+    this.setState((state,props) => {
+      let myStrains;
+      if (this.isFavorite(strain) === undefined) {
+        myStrains = state.myStrains;
+        delete myStrains[strain];
+      }
+      else {
+        let key = this.isFavorite(strain);
+        myStrains = { ...state.myStrains, [key] : state.strains[key]};
+      }
+      localStorage.setItem('myStrains',JSON.stringify(myStrains));
+      return { myStrains };
+    });
+  }
+  isFavorite(strain) {
     let myStrainNames = [];
     for (let myKey in this.state.myStrains) {
       myStrainNames.push(myKey);
     }
     for (let key in this.state.strains) {
       if (strain === key && !myStrainNames.includes(key)) {
-        this.setState({ myStrains: { [key] : this.state.strains[key]}});
-        break;
+        return key;
+      }
+      else if (strain === key && myStrainNames.includes(key)) {
+        return undefined;
       }
     }
   }
@@ -101,6 +147,11 @@ class App extends Component {
       this.setState({ mySpecies });
     }
   }
+  async setStrain(strain,name) {
+    let currentStrain = strain;
+    let currentName = name;
+    await this.setState({currentStrain, currentName});
+  }
   async getAllStrains() {
     const strains = await getAllStrains();
     this.setState({strains});
@@ -118,68 +169,60 @@ class App extends Component {
     this.getEffects();
     this.getFlavors();
   }
-  getMine() {
-    return (
-      <div className="selected">
-          {this.state.myEffects ? <h2>Effects</h2> : null}
-          {this.state.myEffects ?
-          this.state.myEffects.map(effect => {
-            return (
-              <div key={`${effect.effect}-div`}className="add">
-                <p key={effect.effect}>{effect.effect} ({effect.type})</p>
-                <button type="button" key={`${effect.effect}-button`} onClick={() => this.removeEffect(effect)}>-</button>
-              </div>
-            )
-          }): null}
-          {this.state.myFlavors ? <h2>Flavors</h2> : null}
-          {this.state.myFlavors ?
-          this.state.myFlavors.map(flavor => {
-            return (
-              <div key={`${flavor}-div`}className="add">
-                <p key={flavor}>{flavor}</p>
-                <button type="button" key={`${flavor}-button`} onClick={() => this.removeFlavor(flavor)}>-</button>
-              </div>
-            )}) : null}
-      </div>
-    );
-  }
   handleSubmit(e) {
     e.preventDefault();
-    search(this.state.strains,this.state.mySpecies,this.state.myEffects,this.state.myFlavors);
+    let suggestions = search(this.state.strains,this.state.mySpecies,this.state.myEffects,this.state.myFlavors);
+    this.setState({suggestions});
   }
   getView() {
     switch(this.state.view) {
       case 'strains':
         return <TypeAhead
           strains={this.state.strains}
-          addStrain={this.addStrain}/>;
+          addStrain={this.addStrain}
+          setStrain={this.setStrain}
+          isFavorite={this.isFavorite}
+          currentStrain={this.state.currentStrain}
+          currentName={this.state.currentName}
+          showStrain={this.showStrain}/>;
       case 'search':
-        return (
-        <div className="type-container">
-          <TypeAhead
-            addSpecies={this.addSpecies}
-            species={this.state.species}
-            addEffect={this.addEffect}
-            effects={this.state.effects}
-            addFlavor={this.addFlavor}
-            flavors={this.state.flavors}
-            onSubmit={this.handleSubmit}/>
-          <EffectBox
-            addEffect={this.addEffect}
-            effects={this.state.effects}/>
-          <FlavorBox
-            addFlavor={this.addFlavor}
-            flavors={this.state.flavors}/>
-          {this.getMine()}
-        </div>);
+        return <Search
+          addSpecies={this.addSpecies}
+          mySpecies={this.state.mySpecies}
+          effects={this.state.effects}
+          myEffects={this.state.myEffects}
+          addEffect={this.addEffect}
+          flavors={this.state.flavors}
+          myFlavors={this.state.myFlavors}
+          addFlavor={this.addFlavor}
+          handleSubmit={this.handleSubmit}
+          suggestions={this.state.suggestions}
+          clearSearch={this.clearSearch}
+          addStrain={this.addStrain}
+          isFavorite={this.isFavorite}/>
+      case 'favorites':
+        return <Favorites
+          strains={this.state.myStrains}
+          addStrain={this.addStrain}
+          isFavorite={this.isFavorite}/>
+      default:
+        return <Permissions />
     }
   }
   render() {
     return (
-      <div className="App">
+      <React.Fragment>
+        {this.state.permissions ?
+        <div className="App">
+        <h1>Lexicanna</h1>
         <Nav setView={this.setView}/>
         {this.getView()}
-      </div>
+        </div>
+       : <Permissions
+            setPermissions={this.setPermissions}
+            birthday={this.state.birthday}
+            setBirthday={this.setBirthday}/>}
+    </React.Fragment>
     );
   }
 }

@@ -9,12 +9,19 @@ export default function Strains(props) {
       }
     }
   }
-  return validStrains.map(strain => {
-    return (
-      <div key={`${strain}-div`}className="add">
-        <p key={strain}>{strain}</p>
-        <button type="button" key={`${strain}-button`} onClick={() => props.add(strain)}>+</button>
-      </div>
-    )
-  });
+  return (
+    <div className="Strains">
+      { validStrains.map(strain => {
+      return (
+        <div key={`${strain}-div`}className="add">
+          <p key={strain}>{strain}</p>
+          {props.isFavorite(strain) ?
+            <button type="button" key={`${strain}-add`} onClick={() => props.add(strain)}>+</button> :
+            <button type="button" key={`${strain}-add`} onClick={() => props.add(strain)}>-</button> }
+          <button type="button" key={`${strain}-show`} onClick={() => props.set(props.strains[strain],strain)}>?</button>
+        </div>
+      )
+    }) }
+  </div>
+);
 }
