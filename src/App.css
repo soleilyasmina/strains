@@ -1,10 +1,61 @@
+html, body {
+  font-family: 'Montserrat';
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: linear-gradient(to top, #0ba360 0%, green 100%);
+}
 .App {
   text-align: center;
+  width: 85vw;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: white;
+}
+nav {
+  border-bottom: 2px solid green;
+  width: 85vw;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  padding: 1vw 0;
+  margin: 0 0 1vw 0;
+}
+h1 {
+  margin: 0;
+  padding: 1vw 0;
+  color: white;
+  background-color: green;
+}
+h2, h4, h5, h6 {
+  margin: 0;
+  padding: 1vw 0;
+  color: green;
+}
+fieldset {
+  border: 3px solid green;
+}
+fieldset legend {
+  color: green;
+}
+label {
+  color: green;
+}
+input[type=button], input[type=submit], nav button {
+  background-color: green;
+  font-size: 1vw;
+  color: white;
+  font-family: 'Montserrat';
+  margin: 1vw .5vw;
+}
+input[type=text] {
+  width: 49.75vw;
+  margin: 1vw 0;
+  font-family: 'Montserrat';
 }
 .type-container {
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  grid-template-rows: repeat(16,1fr);
+  grid-template-rows: 1fr;
 }
 .EffectBox {
   grid-area: 1 / 1 / 12 / 2;
@@ -19,7 +70,7 @@
 form {
   display: flex;
   flex-direction: column;
-  width: 90vw;
+  width: 80vw;
   margin: 0 auto;
   flex: 1;
 }
@@ -27,7 +78,7 @@ form {
   flex: 1;
 }
 form-section {
-  flex: 1;
+  flex: 0 0 3;
 }
 
 .fieldset {
@@ -40,15 +91,16 @@ form-section {
 }
 .add {
   display: flex;
-  width: 25vw;
+  width: 20vw;
   margin: 0 auto;
 }
 
 label {
-  font-size: 1.5vw;
+  font-size: 1vw;
 }
 .add p {
   flex: 1;
+  color: green;
 }
 
 .add button {
@@ -56,4 +108,76 @@ label {
   height: 3vw;
   flex: 0 0 1;
   margin: auto;
+  font-size: 2vw;
+  color: white;
+  background-color: green;
+  border: 1px solid white;
+}
+
+.faves-container {
+  width: 80vw;
+  margin: 0 auto;
+  padding: 1vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.suggestion-container {
+  width: 80vw;
+  margin: 1vw auto;
+  padding: 1vw auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.indica {
+  background-color: purple;
+  color: white;
+  width: 20vw;
+  padding: 1vw;
+  border: 1px solid white;
+  box-sizing: border-box;
+  flex: 0 0 1;
+}
+
+.sativa {
+  background-color: green;
+  color: white;
+  width: 20vw;
+  padding: 1vw;
+  border: 1px solid white;
+  box-sizing: border-box;
+  flex: 0 0 1;
+}
+
+.hybrid {
+  background-color: #CB5C0D;
+  color: white;
+  width: 20vw;
+  padding: 1vw;
+  border: 1px solid white;
+  box-sizing: border-box;
+  flex: 0 0 1;
+}
+.Strains {
+  width: 50vw;
+  height: 25vw;
+  overflow: scroll;
+  border: 1px solid green;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+}
+li {
+  text-align: left;
+  list-style: square;
+}
+
+.search-holder {
+  display: flex;
+}
+.strain-holder {
+  flex: 0 0 2;
+  margin: 0 auto;
 }

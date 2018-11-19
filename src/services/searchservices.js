@@ -43,7 +43,11 @@ function search(strains,species,effects,flavors) {
         return 0;
     }
   });
-  console.log(returnStrains);
+  let finalStrains = [];
+  for (let i = 0; i < 8; i++) {
+    finalStrains.push(returnStrains[i]);
+  }
+  return finalStrains;
 }
 
 export {
