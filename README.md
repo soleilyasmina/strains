@@ -1,5 +1,9 @@
 # Strains
 
+## Deployment
+
+Deployed on [http://lexicanna.surge.sh](http://lexicanna.surge.sh).
+
 ## Abstract
 
 This application is built on [Evan Busse's Strain API](http://strains.evanbusse.com/index.html). The goal is to give medical cannabis consumers helpful information regarding strains, species, flavors, and effects of different strains of cannabis.
@@ -10,32 +14,6 @@ By selecting a variety of species (sativa, indica, hybrid), effects, and flavors
 1. A user can enter a desired strain and see information regarding its species, effects, and flavors.
 2. A user can enter species, effects, and flavors, and receive optimal strains to treat their condition.
 3. A user can enter and return to favorite strains.
-
-## Components
-
-1. ```<Nav />```
-  Enables navigation between different menus.
-2. ```<TypeAhead />```
-  Base component for search functions.
-3. ```<Strains />```
-  Returns list of strains based on ```<TypeAhead />``` input.
-4. ```<Effects />```
-  Returns list of effects based on ```<TypeAhead />``` input.
-5. ```<Species />```
-  Returns list of species based on ```<TypeAhead />``` input.
-6. ```<Flavors />```
-  Returns list of flavors based on ```<TypeAhead />``` input.
-7. ```<StrainInfo />```
-  Returns a infographic with information regarding the chosen strain.
-8. ```<Suggestion />```
-  Returns a suggestion based on the species, effects, and flavors chosen.
-
-## Services
-
-1. ```./services/strainservices.js```
-  Performs and returns API calls to the Strain API.
-2. ```./services/searchservices.js```
-  Runs algorithm to return optimal strains to the user.
 
 ## Snippets
 The purpose of this snippet is to return strains that contain a substring (i.e. searching 'blue d' and returning all valid strains.)
@@ -60,13 +38,21 @@ export default function Strains(props) {
       }
     }
   }
-  return validStrains.map(strain => {
-    return (
-      <div key={`${strain}-div`}className="add">
-        <p key={strain}>{strain}</p>
-        <button type="button" key={`${strain}-button`} onClick={() => props.add(strain)}>+</button>
-      </div>
-    )
-  });
+  return (
+    <div className="Strains">
+      { validStrains.map(strain => {
+      return (
+        <div key={`${strain}-div`}className="add">
+          <p key={strain}>{strain}</p>
+          {props.isFavorite(strain) ?
+            <button type="button" key={`${strain}-add`} onClick={() => props.add(strain)}>+</button> :
+            <button type="button" key={`${strain}-add`} onClick={() => props.add(strain)}>-</button> }
+          <button type="button" key={`${strain}-show`} onClick={() => props.set(props.strains[strain],strain)}>?</button>
+        </div>
+      )
+    }) }
+  </div>
+);
 }
+
 ```
