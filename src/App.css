@@ -123,6 +123,12 @@ label {
   overflow-x: auto;
 }
 
+.strain p {
+  font-weight: 700;
+}
+.strain p em {
+  font-weight: 400;
+}
 .suggestion-container {
   width: 80vmin;
   overflow-x: auto;

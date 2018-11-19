@@ -27,6 +27,10 @@ export default function Strain(props) {
       <ul>
         {props.strain.effects.negative.map(effect => <li key={effect}>{effect}</li>)}
       </ul>
+      <p>Flavors:</p>
+      <ul>
+        {props.strain.flavors.map(flavor => <li key={flavor}>{flavor}</li>)}
+      </ul>
       {props.isFavorite(name) !== undefined ?
       <button type="button" onClick={() => props.addStrain(name)}>Favorite</button> :
       <button type="button" onClick={() => props.addStrain(name)}>Unfavorite</button>}
